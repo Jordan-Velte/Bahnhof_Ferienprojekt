@@ -1,0 +1,60 @@
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Ferienprojekt</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            
+            <!-- Home -->
+            <li th:if="${activePage == 'home'}" class="nav-item active">
+                <a class="nav-link" th:href="@{/?activePage=home}"></a>
+            </li>
+            <li th:unless="${activePage == 'home'}" class="nav-item">
+                <a class="nav-link" th:href="@{/?activePage=home}">Home</a>
+            </li>
+
+            <!-- Bahnhoefe -->
+            <li th:if="${activePage == 'bahnhoefe'}" class="nav-item active">
+                <a class="nav-link" th:href="@{/bahnhoefe}">Bahnhöfe</a>
+            </li>
+            <li th:unless="${activePage == 'bahnhoefe'}" class="nav-item">
+                <a class="nav-link" th:href="@{/bahnhoefe}">Bahnhöfe</a>
+            </li>
+
+            <!-- Personenzuege -->
+            <li th:if="${activePage == 'standardpersonenzuege'}" class="nav-item active">
+                <a class="nav-link" th:href="@{/standardpersonenzuege}">Personenzüge</a>
+            </li>
+            <li th:unless="${activePage == 'standardpersonenzuege'}" class="nav-item">
+                <a class="nav-link" th:href="@{/standardpersonenzuege}">Personenzüge</a>
+            </li>
+
+            <!-- Passagiere -->
+            <li th:if="${activePage == 'passagiere'}" class="nav-item active">
+                <a class="nav-link" th:href="@{/passagiere}">Passagiere</a>
+            </li>
+            <li th:unless="${activePage == 'passagiere'}" class="nav-item">
+                <a class="nav-link" th:href="@{/passagiere}">Passagiere</a>
+            </li>
+
+            <!-- Personal -->
+            <li th:if="${activePage == 'personal'}" class="nav-item active">
+                <a class="nav-link" th:href="@{/personal}">Personal</a>
+            </li>
+            <li th:unless="${activePage == 'personal'}" class="nav-item">
+                <a class="nav-link" th:href="@{/personal}">Personal</a>
+            </li>
+            
+            <!-- Impressum -->
+            <li th:if="${activePage == 'impressum'}" class="nav-item active">
+                <a class="nav-link" th:href="@{/?activePage=impressum}">Impressum</a>
+            </li>
+            <li th:unless="${activePage == 'impressum'}" class="nav-item">
+                <a class="nav-link" th:href="@{/?activePage=impressum}">Impressum</a>
+            </li>
+        </ul>
+        </div>
+    </nav>
+</div>

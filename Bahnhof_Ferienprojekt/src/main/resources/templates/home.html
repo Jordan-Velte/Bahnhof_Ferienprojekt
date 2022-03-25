@@ -1,0 +1,42 @@
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+    <div class="container">
+      <h1 class="display-3">Willkommen</h1>
+      <p>Im Rahmen des Ferienprojekts "Bahnhof" wird auf dieser Seite das Java-Spring-Framework genutzt, um anhand des bisherigen Java-Models dynamischen HTML-Code zu erstellen!</p>
+      <!-- Verweis über activePage auf das Impressum -->
+      <p><a class="btn btn-primary btn-lg" th:href="@{/?activePage=impressum}" role="button">Impressum &raquo;</a></p>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Example row of columns -->
+    <!-- Bahnhöfe-Karte -->
+    <div class="row">
+      <div class="col-md-4">
+        <h2>Bahnhöfe</h2>
+        <p>Anzeige aller Bahnhöfe: Ein Bahnhof ist per Definition ein Gesamtkomplex einer Bahnstation mit Gleisanlagen und zugehörigen Gebäuden. </p>
+        <p><a class="btn btn-secondary" th:href="@{/bahnhoefe}" role="button"> Anzeigen &raquo;</a></p>
+      </div>
+      <!-- Personenzüge-Karte -->
+      <div class="col-md-4">
+        <h2>Personenzüge</h2>
+        <p>Anzeige aller Personenzüge: Ein Personenzug ist per Definition als Transportmittel eine Zuggattung der Eisenbahn, das für den Transport von Passagieren und Reisegepäck vorgesehen ist. Hierbei handelt es sich um Reisezüge, die in der Regel an allen Bahnhöfen halten. </p>
+        <p><a class="btn btn-secondary" th:href="@{/standardpersonenzuege}" role="button">Anzeigen &raquo;</a></p>
+      </div>
+      <!-- Passagiere-Karte -->
+      <div class="col-md-4">
+        <h2>Passagiere</h2>
+        <p>Anzeige aller Passagiere: Ein Passagier ist per Definition eine Person, die mit einem Fahrzeug als Reisender befördert wird und das Transportmittel weder selbst lenkt noch zum technischen oder Servicepersonal gehört.</p>
+        <p><a class="btn btn-secondary" th:href="@{/passagiere}" role="button">Anzeigen &raquo;</a></p>
+      </div>
+      <!-- Personal-Karte -->
+      <div class="col-md-4">
+        <h2>Personal</h2>
+        <p>Anzeige des gesamten Personals: Als Personal wird per Definition ein vom Arbeitgeber beschäftigter Arbeitnehmer bezeichnet, der innerhalb einer institutionell abgesicherten Ordnung (Arbeitsanweisungen) eine Arbeitsleistung gegen ein Arbeitsentgelt erbringt.</p>
+        <p><a class="btn btn-secondary" th:href="@{/personal}" role="button">Anzeigen &raquo;</a></p>
+      </div>
+    </div>
+
+    <hr>
+
+  </div> <!-- /container -->

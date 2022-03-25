@@ -1,0 +1,19 @@
+<h2>Standardpersonenzug bearbeiten</h2>
+<hr>
+<!-- Verweis auf update-Methode und Übergabe der entsprechenden id der ArrayList-Instanz -->
+<form th:action="@{/updatestandardpersonenzug(id=${standardpersonenzugid})}">
+    <div class="input-group mb-3">
+        <!-- Textinput an Formular mappen mit th:name-->
+        <input type="text" class="form-control" th:value="${standardpersonenzug.getModell()}" th:name="standardpersonenzugModell">
+        <input type="text" class="form-control" th:value="${standardpersonenzug.getBetreiber()}" th:name="standardpersonenzugBetreiber">
+        <input type="text" class="form-control" th:value="${standardpersonenzug.getDurchschnittsgeschwindigkeit()}" th:name="standardpersonenzugDurchschnittsgeschwindigkeit">
+        <input type="text" class="form-control" th:value="${standardpersonenzug.getWagonanzahl}" th:name="standardpersonenzugWagonanzahl">
+        <input type="text" class="form-control" th:value="${standardpersonenzug.getZulassungsdatum}" th:name="standardpersonenzugZulassungsdatum">
+        <input type="text" class="form-control" th:value="${standardpersonenzug.getMaxpersonenladung}" th:name="standardpersonenzugMaxpersonenladung">
+        <input type="number" class="form-control" th:value="${standardpersonenzugid}" th:name="standardpersonenzugId" style="display: none;">
+        <div class="input-group-append">
+            <!--Submit button verbindet sich automatisch mit Formular und aktiviert action, für Anknüpfung Parameter hinzuzufügen-->
+            <button class="btn btn-secondary" type="submit" id="button-addon2">Aktualisieren</button>
+        </div>
+    </div>
+</form>

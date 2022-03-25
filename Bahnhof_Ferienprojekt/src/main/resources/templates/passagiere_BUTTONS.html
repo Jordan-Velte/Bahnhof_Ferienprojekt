@@ -1,0 +1,20 @@
+<!--Zeichenketten mit + verknüpft! Dynamisch, somit automatischer reload (responsive)-->
+<h2 th:text="'Anzahl der Passagiere (' + ${#arrays.length(passagiere)} + ')'"></h2>
+<hr>
+<!--Für jedes Element der ArrayList findet eine Zwischenspeicherung in einer Variable statt. Jener Wert ist der Text eines Zeileneintrags (Iteration über Elemente der ArrayList)! Über Indexierung = Schlüsselkompetenz um Dinge zu ändern!-->
+<span th:each="passagier, passagierStat: ${passagiere}">
+    <a class="btn btn-secondary mt-2" th:text="${passagier}" th:href="@{/delpassagier(id=${passagierStat.index})}"></a>
+</span>
+<hr>
+<!-- durch th:action und th:name ist alles ein fertiges Formular, welches an den Server als RequestParam geschickt wird-->
+<!-- Route wo auch ein Parameter hintersteckt! -->
+<form th:action="@{/addpassagier}">
+    <div class="input-group mb-3">
+        <!-- Textinput an Formular mappen mit th:name-->
+        <input type="text" class="form-control" placeholder="Neuer Passagier" th:name="passagierVorname">
+        <div class="input-group-append">
+            <!--Submit button verbindet sich automatisch mit Formular und aktiviert action, für Anknüpfung Parameter hinzuzufügen-->
+            <button class="btn btn-secondary" type="submit" id="button-addon2">Speichern</button>
+        </div>
+    </div>
+</form>

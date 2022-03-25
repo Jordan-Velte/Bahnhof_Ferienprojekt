@@ -1,0 +1,18 @@
+<h2>Bahnhof bearbeiten</h2>
+<hr>
+<!-- Verweis auf update-Methode und Übergabe der entsprechenden id der ArrayList-Instanz -->
+<!-- durch th:action und th:name ist alles ein fertiges Formular, welches an den Server als RequestParam geschickt wird-->
+<!-- Route wo auch ein Parameter hintersteckt! -->
+<form th:action="@{/updatebahnhof(id=${bahnhofid})}">
+    <div class="input-group mb-3">
+        <!-- Textinput an Formular mappen mit th:name-->
+        <input type="text" class="form-control" th:value="${bahnhof.getName()}" th:name="bahnhofName" >
+        <input type="text" class="form-control" th:value="${bahnhof.getStandort()}" th:name="bahnhofStandort" >
+        <input type="text" class="form-control" th:value="${bahnhof.getAnzahl_Gleise()}" th:name="bahnhofAnzahl_Gleise" >
+        <input type="number" class="form-control" th:value="${bahnhofid}" th:name="bahnhofId" style="display: none;" >
+        <div class="input-group-append">
+            <!--Submit button verbindet sich automatisch mit Formular und aktiviert action, für Anknüpfung Parameter hinzuzufügen-->
+            <button class="btn btn-secondary" type="submit" id="button-addon2">Aktualisieren</button>
+        </div>
+    </div>
+</form>

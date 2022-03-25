@@ -1,0 +1,38 @@
+<!-- Bootstrap code! siehe Link in Notizbuch das ist eine Skriptsprache, wird eins zu eins vom Browser übernommen-->
+<!-- STARTPUNKT-->
+<!doctype html>
+<!-- Sprache ist Englisch!-->
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <!-- Für Interpretation der Zeichenkette -->
+    <meta charset="utf-8">
+    <!-- Skalierung/Verhältnisgrößen der Website -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS, es werden nur CSS Dateien im Head eingefügt!-->
+    <!-- href: CSS Datei von Bootstrap!-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Ferienprojekt Bahnhof</title>
+  </head>
+  <body>
+    <!-- Body ist sichtbar auf HTML!-->
+    <!--th steht für Thymeleaf hier dockt Compiler an, der menu einfügt. Bootstrap ist schon hineingeladen, effizienter! -->
+    <div th:insert="menu"></div>
+    <!-- Fügt die Home-Seite an! Home muss immer in einen Container, somit beides linksgebunden in dem Fall! activePage ist String Variable, die vom IndexController festgesetzt wird (bestimmt welche Seite geladen wird)-->
+    <!-- Einfügen des Wertes für activePage (z.B. home). Container ist an insert aufgehookt-->
+    <!-- CSS wird über die Class angesprochen, Class kann man mehrmals verwenden, id nur einmal! -->
+    <!-- Div = Divider, teilen die Webseite in unterschiedliche Elemente auf (siehe Styling!) -->
+    <div class="container" th:insert="${activePage}"></div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- jQuery: damit man überhaupt alles in JavaScript machen kann! Zudem kürzt sie Java-Code, macht es einfacher und schneller!-->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <!-- Hilfsfunktionen. CDN ist ein Server für Java-Bibliotheken, Popper ist eine Anwendung hierfür!-->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <!-- Java Script von Bootstrap. Algortihmus sha384 bekommt man gleiche Zeichenkette zurück, dann sicher dass richtig! Steht auf dem Server. Integritätsüberprüfung! Hacker kann Schrott schicken, aber wenn Integritätssumme anders (sich verändert), dann wird Fehler!-->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>

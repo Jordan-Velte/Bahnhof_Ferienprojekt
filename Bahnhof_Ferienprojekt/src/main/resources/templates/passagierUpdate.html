@@ -1,0 +1,16 @@
+<h2>Passagier bearbeiten</h2>
+<hr>
+<!-- Verweis auf update-Methode und Übergabe der entsprechenden id der ArrayList-Instanz -->
+<form th:action="@{/updatepassagier(id=${standardpersonenzugid})}">
+    <div class="input-group mb-3">
+        <!-- Textinput an Formular mappen mit th:name-->
+        <input type="text" class="form-control" th:value="${passagier.getVorname()}" th:name="passagierVorname">
+        <input type="text" class="form-control" th:value="${passagier.getNachname()}" th:name="passagierNachname">
+        <input type="text" class="form-control" th:value="${passagier.getKundennummer()}" th:name="passagierKundennummer">
+        <input type="number" class="form-control" th:value="${passagierid}" th:name="passagierId" style="display: none;">
+        <div class="input-group-append">
+            <!--Submit button verbindet sich automatisch mit Formular und aktiviert action, für Anknüpfung Parameter hinzuzufügen-->
+            <button class="btn btn-secondary" type="submit" id="button-addon2">Aktualisieren</button>
+        </div>
+    </div>
+</form>

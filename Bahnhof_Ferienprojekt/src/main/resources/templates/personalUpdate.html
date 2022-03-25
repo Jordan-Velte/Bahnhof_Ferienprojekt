@@ -1,0 +1,16 @@
+<h2>Personal bearbeiten</h2>
+<hr>
+<!-- Verweis auf update-Methode und Übergabe der entsprechenden id der ArrayList-Instanz -->
+<form th:action="@{/updatepersonal(id=${personalid})}">
+    <div class="input-group mb-3">
+        <!-- Textinput an Formular mappen mit th:name-->
+        <input type="text" class="form-control" th:value="${personal.getVorname()}" th:name="personalVorname">
+        <input type="text" class="form-control" th:value="${personal.getNachname()}" th:name="personalNachname">
+        <input type="text" class="form-control" th:value="${personal.getPersonalnummer()}" th:name="personalPersonalnummer">
+        <input type="number" class="form-control" th:value="${personalid}" th:name="personalId" style="display: none;">
+        <div class="input-group-append">
+            <!--Submit button verbindet sich automatisch mit Formular und aktiviert action, für Anknüpfung Parameter hinzuzufügen-->
+            <button class="btn btn-secondary" type="submit" id="button-addon2">Aktualisieren</button>
+        </div>
+    </div>
+</form>
