@@ -16,6 +16,7 @@ public class Personal extends Person{
     // Setter und Getter
     public int getPersonalnummer() {
         return personalnummer;
+        
     }
 
     public void setPersonalnummer(int personalnummer) {
