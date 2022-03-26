@@ -18,6 +18,7 @@ public class ZuegeController {
     //ArrayList-Deklaration
     ArrayList<Zug> zuege;
     ArrayList<StandardPersonenZug> standardpersonenzuege;
+    ArrayList<String> modelle;
     
 
 
@@ -25,6 +26,7 @@ public class ZuegeController {
         setStandardpersonenzuege(new ArrayList<StandardPersonenZug>());
         setZuege(new ArrayList<Zug>());
         createDemoData();
+        createModelle();
     }
 
     //Demodaten
@@ -37,10 +39,17 @@ public class ZuegeController {
         getZuege().add(spz2);
     }
 
+    //Demodaten Modelle
+    private void createModelle(){
+        getModelle().add("Intercity 1");
+        getModelle().add("Alstom Coradia Continental");
+    }
+
     @GetMapping("/standardpersonenzuege")
     public String standardpersonenzuege(@RequestParam(name="activePage", required = false, defaultValue = "standardpersonenzuege") String activePage, Model model){
         model.addAttribute("activePage", "standardpersonenzuege");
         model.addAttribute("standardpersonenzuege", getStandardpersonenzuege());
+        model.addAttribute("modelle", getModelle());
         return "index.html";
     }
 
@@ -91,6 +100,13 @@ public class ZuegeController {
     public ArrayList<Zug> getZuege() {
         return zuege;
     }
+    public void setModelle(ArrayList<String> modelle) {
+        this.modelle = modelle;
+    }
+    public ArrayList<String> getModelle() {
+        return modelle;
+    }
+
 
 
 }
