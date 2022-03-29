@@ -47,16 +47,7 @@
 <form th:action="@{/addstandardpersonenzug}">
     <div class="input-group mb-3">
         <!-- Textinput an Formular mappen mit th:name-->
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-expanded="false">
-            Modell
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" th:text="modell">test</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-        </div>
+        <input type="text" class="form-control" placeholder="Modell" th:name="standardpersonenzugModell">
         <input type="text" class="form-control" placeholder="Betreiber" th:name="standardpersonenzugBetreiber">
         <input type="text" class="form-control" placeholder="Durchschnittsgeschwindigkeit" th:name="standardpersonenzugDurchschnittsgeschwindigkeit">
         <input type="text" class="form-control" placeholder="Wagonanzahl" th:name="standardpersonenzugWagonanzahl">
