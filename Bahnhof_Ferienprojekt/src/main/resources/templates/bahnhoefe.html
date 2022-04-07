@@ -44,9 +44,41 @@
 <form th:action="@{/addbahnhof}">
     <div class="input-group mb-3">
         <!-- Textinput an Formular mappen mit th:name. Fortführung für weitere Felder notwendig-->
-        <input type="text" class="form-control" placeholder="Name" th:name="bahnhofName">
-        <input type="text" class="form-control" placeholder="Standort" th:name="bahnhofStandort">
-        <input type="text" class="form-control" placeholder="Anzahl Gleise" th:name="bahnhofAnzahl_Gleise">
+        <!--
+        <input type="text" class="form-control is-valid" placeholder="Name" id="validationServer01" required>
+        <div class="valid-feedback">
+            Looks good!
+        </div>
+        -->
+        <!-- Durch required bekommt man die gewünschte Fehlermeldung, wenn das Feld leer ist -->
+        <input type="text" class="form-control" placeholder="Name" th:name="bahnhofName" required>
+        <div class="invalid-feedback">Example invalid custom select feedback</div>
+
+        <!-- Standort -->
+        <!--
+        <select class="custom-select" id="inputGroupSelect01" th:name="bahnhofStandort">
+            
+            <option th:each="standort: ${standorte}" th:value="${standort}" th:text="${standort}"></option>
+        </select>
+        -->
+
+        <!-- Change needed -->
+        <div class="form-group">
+            <select class="custom-select" th:name="bahnhofStandort" required>
+                <!-- Dynamisierte DropDown-Liste mit Option-Select -->
+                <option th:each="standort: ${standorte}" th:value="${standort}" th:text="${standort}"></option>
+            </select>
+            <!--
+            <div class="invalid-feedback">Bitte einen validen Namen eingeben!</div>
+            -->
+        </div>
+
+        <!-- Anzahl Gleise -->
+        <select class="custom-select" id="inputGroupSelect01" th:name="bahnhofAnzahl_Gleise">
+            <!-- Dynamisierte DropDown-Liste mit Option-Select -->
+            <option th:each="anzahl_gleis: ${anzahl_gleise}" th:value="${anzahl_gleis}" th:text="${anzahl_gleis}"></option>
+        </select>
+
         <div class="input-group-append">
             <!--Submit button verbindet sich automatisch mit Formular und aktiviert action, für Anknüpfung Parameter hinzuzufügen-->
             <button class="btn btn-secondary" type="submit" id="button-addon2">Speichern</button>
@@ -55,3 +87,26 @@
 </form>
 <!-- Menu-Button -->
 <a th:href="@{/?activePage=home}"><img src="https://cdn-icons-png.flaticon.com/512/60/60817.png" alt="HTML tutorial" style="width:42px;height:42px;"></a>
+
+
+<!-- Brauch man! -->
+<script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function() {
+      'use strict';
+      window.addEventListener('load', function() {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function(form) {
+          form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          }, false);
+        });
+      }, false);
+    })();
+    </script>

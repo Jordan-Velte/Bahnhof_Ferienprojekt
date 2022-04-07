@@ -7,8 +7,23 @@
     <div class="input-group mb-3">
         <!-- Textinput an Formular mappen mit th:name-->
         <input type="text" class="form-control" th:value="${bahnhof.getName()}" th:name="bahnhofName" >
-        <input type="text" class="form-control" th:value="${bahnhof.getStandort()}" th:name="bahnhofStandort" >
-        <input type="text" class="form-control" th:value="${bahnhof.getAnzahl_Gleise()}" th:name="bahnhofAnzahl_Gleise" >
+
+        <!-- Standort -->
+        <select class="custom-select" id="inputGroupSelect01" th:name="bahnhofStandort">
+            <!-- Dynamisierte DropDown-Liste mit Option-Select -->
+            <span th:each="standort: ${standorte}">
+                <option th:if="${bahnhof.getStandort() == standort}" th:value="${standort}" th:text="${standort}" selected="selected"></option>
+                <option th:unless="${bahnhof.getStandort() == standort}" th:value="${standort}" th:text="${standort}"></option>
+            </span>
+        </select>
+        <!-- Anzahl Gleise -->
+        <select class="custom-select" id="inputGroupSelect01" th:name="bahnhofAnzahl_Gleise">
+            <!-- Dynamisierte DropDown-Liste mit Option-Select -->
+            <span th:each="anzahl_gleis: ${anzahl_gleise}">
+                <option th:if="${bahnhof.getAnzahl_Gleise() == anzahl_gleis}" th:value="${anzahl_gleis}" th:text="${anzahl_gleis}" selected="selected"></option>
+                <option th:unless="${bahnhof.getAnzahl_Gleise() == anzahl_gleis}" th:value="${anzahl_gleis}" th:text="${anzahl_gleis}"></option>
+            </span>
+        </select>
         <input type="number" class="form-control" th:value="${bahnhofid}" th:name="bahnhofId" style="display: none;" >
         <div class="input-group-append">
             <!--Submit button verbindet sich automatisch mit Formular und aktiviert action, für Anknüpfung Parameter hinzuzufügen-->

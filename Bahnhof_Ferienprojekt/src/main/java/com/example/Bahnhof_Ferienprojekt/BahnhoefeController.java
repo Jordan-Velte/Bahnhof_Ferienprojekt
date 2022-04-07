@@ -29,10 +29,56 @@ public class BahnhoefeController {
         getBahnhoefe().add(new Bahnhof("Hannover Regionalbahnhof", "Hannover", 2));
     }
 
+    //Standorte erstellen und zurückgeben
+    private ArrayList<String> getStandorte(){
+        ArrayList<String> standorte = new ArrayList<>();
+        standorte.add("Hamburg");
+        standorte.add("Berlin");
+        standorte.add("Hannover");
+        standorte.add("Frankfurt am Main");
+        standorte.add("München");
+        standorte.add("Stuttgart");
+        standorte.add("Nürnberg");
+        return standorte;
+    }
+
+    //Anzahl Gleise erstellen und zurückgeben
+    private ArrayList<Integer> getAnzahl_Gleise(){
+        ArrayList<Integer> anzahl_gleise = new ArrayList<>();
+        anzahl_gleise.add(1);
+        anzahl_gleise.add(2);
+        anzahl_gleise.add(3);
+        anzahl_gleise.add(4);
+        anzahl_gleise.add(5);
+        anzahl_gleise.add(6);
+        anzahl_gleise.add(7);
+        anzahl_gleise.add(8);
+        anzahl_gleise.add(9);
+        anzahl_gleise.add(10);
+        anzahl_gleise.add(11);
+        anzahl_gleise.add(12);
+        anzahl_gleise.add(13);
+        anzahl_gleise.add(14);
+        anzahl_gleise.add(15);
+        anzahl_gleise.add(16);
+        anzahl_gleise.add(17);
+        anzahl_gleise.add(18);
+        anzahl_gleise.add(19);
+        anzahl_gleise.add(20);
+        return anzahl_gleise;
+    }
+
+
+
     @GetMapping("/bahnhoefe")
     public String bahnhoefe(@RequestParam(name="activePage", required = false, defaultValue = "bahnhoefe") String activePage, Model model){
         model.addAttribute("activePage", "bahnhoefe");
         model.addAttribute("bahnhoefe", getBahnhoefe());
+
+        // Standort für einen Bahnhof holen
+        model.addAttribute("standorte", getStandorte());
+        // Anzahl Gleise für einen Bahnhof holen
+        model.addAttribute("anzahl_gleise", getAnzahl_Gleise());
         return "index.html";
     }
 
@@ -47,6 +93,12 @@ public class BahnhoefeController {
         // Todo zur Bearbeitung laden
         model.addAttribute("bahnhof", getBahnhoefe().get(id));
         model.addAttribute("bahnhofid", id);
+        
+        //Möglichen Standort hier hinzufügen
+        model.addAttribute("standorte", getStandorte());
+        //Mögliche Anzahl Gleise hier hinzufügen
+        model.addAttribute("anzahl_gleise", getAnzahl_Gleise());
+
         model.addAttribute("activePage", "bahnhofUpdate");
         return "index.html";
     }

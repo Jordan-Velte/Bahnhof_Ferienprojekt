@@ -18,7 +18,6 @@ public class ZuegeController {
     //ArrayList-Deklaration
     ArrayList<Zug> zuege;
     ArrayList<StandardPersonenZug> standardpersonenzuege;
-    ArrayList<String> modelle;
     
 
 
@@ -26,30 +25,67 @@ public class ZuegeController {
         setStandardpersonenzuege(new ArrayList<StandardPersonenZug>());
         setZuege(new ArrayList<Zug>());
         createDemoData();
-        createModelle();
     }
+
 
     //Demodaten
     private void createDemoData(){
-        StandardPersonenZug spz1 = new StandardPersonenZug("Intercity 1", "Deutsche Bahn", 200, 8, "26.09.1971", 703);
-        StandardPersonenZug spz2 = new StandardPersonenZug("Alstom Coradia Continental", "Deutsche Bahn", 160, 4, "01.12.2008", 450);
+        StandardPersonenZug spz1 = new StandardPersonenZug("Intercity 1", "Deutsche Bahn", 200, 8, "1971-09-26", 703);
+        StandardPersonenZug spz2 = new StandardPersonenZug("Alstom Coradia Continental", "Deutsche Bahn", 160, 4, "2008-12-01", 450);
         getStandardpersonenzuege().add(spz1);
         getStandardpersonenzuege().add(spz2);
         getZuege().add(spz1);
         getZuege().add(spz2);
     }
 
-    //Demodaten Modelle
-    private void createModelle(){
-        getModelle().add("Intercity 1");
-        getModelle().add("Alstom Coradia Continental");
+    // Betreiber erstellen und zurückgeben
+    private ArrayList<String> getBetreiber(){
+        ArrayList<String> betreiber = new ArrayList<>();
+
+        betreiber.add("Deutsche Bahn");
+        betreiber.add("Ausländischer Betreiber");
+
+        return betreiber;
     }
+
+    // Wagonanzahl erstellen und zurückgeben
+    private ArrayList<Integer> getWagonanzahl(){
+        ArrayList<Integer> wagonanzahl = new ArrayList<>();
+
+        wagonanzahl.add(1);
+        wagonanzahl.add(2);
+        wagonanzahl.add(3);
+        wagonanzahl.add(4);
+        wagonanzahl.add(5);
+        wagonanzahl.add(6);
+        wagonanzahl.add(7);
+        wagonanzahl.add(8);
+        wagonanzahl.add(9);
+        wagonanzahl.add(10);
+        wagonanzahl.add(11);
+        wagonanzahl.add(12);
+        wagonanzahl.add(13);
+        wagonanzahl.add(14);
+        wagonanzahl.add(15);
+        wagonanzahl.add(16);
+        wagonanzahl.add(17);
+        wagonanzahl.add(18);
+        wagonanzahl.add(19);
+        wagonanzahl.add(20);
+
+        return wagonanzahl;
+    }
+
+
 
     @GetMapping("/standardpersonenzuege")
     public String standardpersonenzuege(@RequestParam(name="activePage", required = false, defaultValue = "standardpersonenzuege") String activePage, Model model){
         model.addAttribute("activePage", "standardpersonenzuege");
         model.addAttribute("standardpersonenzuege", getStandardpersonenzuege());
-        model.addAttribute("modelle", getModelle());
+        //Betreiber für einen Standardpersonenzug holen
+        model.addAttribute("betreiber", getBetreiber());
+        //wagonanzahl für einen Standardpersonenzug holen
+        model.addAttribute("wagonanzahl", getWagonanzahl());
         return "index.html";
     }
 
@@ -63,6 +99,11 @@ public class ZuegeController {
     public String changestandardpersonenzug(@RequestParam(name="id", required = true, defaultValue = "null") int id, @RequestParam(name="activePage", required = false, defaultValue = "changestandardpersonenzug") String activePage, Model model){
         model.addAttribute("standardpersonenzug", getStandardpersonenzuege().get(id));
         model.addAttribute("standardpersonenzugid", id);
+        
+        // Möglichen Betreiber hier hinzufügen
+        model.addAttribute("betreiber", getBetreiber());
+        model.addAttribute("wagonanzahl", getWagonanzahl());
+        // Möglichen Wagonanzahl hier hinzufügen
         model.addAttribute("activePage", "standardpersonenzugUpdate");
         return "index.html";
     }
@@ -99,12 +140,6 @@ public class ZuegeController {
     }
     public ArrayList<Zug> getZuege() {
         return zuege;
-    }
-    public void setModelle(ArrayList<String> modelle) {
-        this.modelle = modelle;
-    }
-    public ArrayList<String> getModelle() {
-        return modelle;
     }
 
 
