@@ -6,10 +6,12 @@ public class Bahnhof {
     String name;
     String standort;
     int anzahl_gleise;
+    int id;
     //Da es mehrere Gleiskombination gibt: ArrayList für Gleis-Instanzen eines Bahnhofs!
     
     //CONSTRUCTOR
-    public Bahnhof(String name, String standort, int anzahl_gleise){
+    public Bahnhof(int id, String name, String standort, int anzahl_gleise){
+        setId(id);
         setName(name);
         setStandort(standort);
         setAnzahl_Gleise(anzahl_gleise);
@@ -33,6 +35,12 @@ public class Bahnhof {
     }
     public void setAnzahl_Gleise(int anzahl_gleise) {
         this.anzahl_gleise = anzahl_gleise;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+    public int getId() {
+        return id;
     }
 
     

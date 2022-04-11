@@ -24,9 +24,9 @@ public class BahnhoefeController {
 
     //Demodaten
     private void createDemoData(){
-        getBahnhoefe().add(new Bahnhof("Hamburg Hauptbahnhof", "Hamburg", 5));
-        getBahnhoefe().add(new Bahnhof("Berlin Hauptbahnhof", "Berlin", 4));
-        getBahnhoefe().add(new Bahnhof("Hannover Regionalbahnhof", "Hannover", 2));
+        getBahnhoefe().add(new Bahnhof(0, "Hamburg Hauptbahnhof", "Hamburg", 5));
+        getBahnhoefe().add(new Bahnhof(1, "Berlin Hauptbahnhof", "Berlin", 4));
+        getBahnhoefe().add(new Bahnhof(2, "Hannover Regionalbahnhof", "Hannover", 2));
     }
 
     //Standorte erstellen und zurückgeben
