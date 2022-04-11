@@ -103,7 +103,7 @@ public class BahnhoefeController {
     public String changebahnhof(@RequestParam(name="id", required = true, defaultValue = "null") int id, @RequestParam(name="activePage", required = false, defaultValue = "changebahnhof") String activePage, Model model){
         // Bahnhof zur Bearbeitung laden
         DBController db = new DBController();
-        model.addAttribute("todo", db.getBahnhof(id));
+        model.addAttribute("bahnhof", db.getBahnhof(id));
         model.addAttribute("bahnhofid", id);
         
         //Möglichen Standort hier hinzufügen

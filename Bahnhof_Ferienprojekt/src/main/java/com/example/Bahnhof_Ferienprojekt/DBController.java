@@ -86,7 +86,7 @@ public class DBController {
         }
     }
 
-    // Hole spezifische Todo
+    // Hole spezifischen Bahnhof
     public Bahnhof getBahnhof(int id){
         Bahnhof bahnhof = null;
         try{

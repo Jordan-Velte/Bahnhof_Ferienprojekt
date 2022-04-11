@@ -7,7 +7,7 @@ public class Bahnhof {
     String standort;
     int anzahl_gleise;
     int id;
-    //Da es mehrere Gleiskombination gibt: ArrayList für Gleis-Instanzen eines Bahnhofs!
+
     
     //CONSTRUCTOR
     public Bahnhof(int id, String name, String standort, int anzahl_gleise){
