@@ -19,14 +19,23 @@ public class BahnhoefeController {
 
     public BahnhoefeController(){
         setBahnhoefe(new ArrayList<Bahnhof>());
-        createDemoData();
+        //createDemoData();
+        loadBahnhoefeFromDB();
     }
 
     //Demodaten
+    
     private void createDemoData(){
         getBahnhoefe().add(new Bahnhof(0, "Hamburg Hauptbahnhof", "Hamburg", 5));
         getBahnhoefe().add(new Bahnhof(1, "Berlin Hauptbahnhof", "Berlin", 4));
         getBahnhoefe().add(new Bahnhof(2, "Hannover Regionalbahnhof", "Hannover", 2));
+    }
+    
+
+    // Lädt aktuelle Bahnhöfe aus der Datenbank und wirft bei Bedarf eine SQL-Exception
+    private void loadBahnhoefeFromDB(){
+        DBController db = new DBController();
+        setBahnhoefe(db.getAllBahnhoefe());
     }
 
     //Standorte erstellen und zurückgeben
@@ -72,6 +81,7 @@ public class BahnhoefeController {
 
     @GetMapping("/bahnhoefe")
     public String bahnhoefe(@RequestParam(name="activePage", required = false, defaultValue = "bahnhoefe") String activePage, Model model){
+        loadBahnhoefeFromDB();
         model.addAttribute("activePage", "bahnhoefe");
         model.addAttribute("bahnhoefe", getBahnhoefe());
 
@@ -84,14 +94,16 @@ public class BahnhoefeController {
 
     @RequestMapping("/delbahnhof")
     public String delbahnhof(@RequestParam(name="id", required = true, defaultValue = "null") int id, @RequestParam(name="activePage", required = false, defaultValue = "bahnhoefe") String activePage, Model model){
-        getBahnhoefe().remove(id);
+        DBController db = new DBController();
+        db.delBahnhof(id);
         return "redirect:/bahnhoefe";
     }
 
     @RequestMapping("/changebahnhof")
     public String changebahnhof(@RequestParam(name="id", required = true, defaultValue = "null") int id, @RequestParam(name="activePage", required = false, defaultValue = "changebahnhof") String activePage, Model model){
-        // Todo zur Bearbeitung laden
-        model.addAttribute("bahnhof", getBahnhoefe().get(id));
+        // Bahnhof zur Bearbeitung laden
+        DBController db = new DBController();
+        model.addAttribute("todo", db.getBahnhof(id));
         model.addAttribute("bahnhofid", id);
         
         //Möglichen Standort hier hinzufügen
@@ -105,15 +117,15 @@ public class BahnhoefeController {
 
     @RequestMapping("/updatebahnhof")
     public String updatebahnhof(@RequestParam(name="bahnhofId", required = true, defaultValue = "null") int bahnhofId, @RequestParam(name="bahnhofName", required = true, defaultValue = "null") String bahnhofName, @RequestParam(name="bahnhofStandort", required = true, defaultValue = "null") String bahnhofStandort, @RequestParam(name="bahnhofAnzahl_Gleise", required = true, defaultValue = "null") int bahnhofAnzahl_Gleise, @RequestParam(name="activePage", required = false, defaultValue = "bahnhoefe") String activePage, Model model){
-        getBahnhoefe().get(bahnhofId).setName(bahnhofName);
-        getBahnhoefe().get(bahnhofId).setStandort(bahnhofStandort);
-        getBahnhoefe().get(bahnhofId).setAnzahl_Gleise(bahnhofAnzahl_Gleise);
+        DBController db = new DBController();
+        db.updateBahnhof(bahnhofId, bahnhofName, bahnhofStandort, bahnhofAnzahl_Gleise);
         return "redirect:/bahnhoefe";
     }
 
     @RequestMapping("/addbahnhof")
     public String addbahnhof(@RequestParam(name="bahnhofName", required = true, defaultValue = "null") String bahnhofName,@RequestParam(name="bahnhofStandort", required = true, defaultValue = "null") String bahnhofStandort, @RequestParam(name="bahnhofAnzahl_Gleise", required = true, defaultValue = "null") int bahnhofAnzahl_Gleise, @RequestParam(name="activePage", required = false, defaultValue = "bahnhoefe") String activePage, Model model){
-        getBahnhoefe().add(new Bahnhof(bahnhofName, bahnhofStandort, bahnhofAnzahl_Gleise));
+        DBController db = new DBController();
+        db.addNewBahnhof(bahnhofName, bahnhofStandort, bahnhofAnzahl_Gleise);
         return "redirect:/bahnhoefe";
     }
 

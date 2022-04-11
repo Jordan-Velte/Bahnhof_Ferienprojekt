@@ -31,12 +31,12 @@ public class DBController {
         ArrayList<Bahnhof> bahnhoefe = new ArrayList<>();
 
         // Das ist DB-Query
-        String sqlSelectAllBahnhof_Ferienprojekt = "SELECT * FROM bahnhof_ferienprojekt";
+        String sqlSelectAllBahnhoefe = "SELECT * FROM bahnhoefe";
 
         // Verbindung aufbauen mit USERNAME root und PASSWORT root
         try{
             Connection conn = DriverManager.getConnection(getConnectionUrl(), getUsername(), getPasswort()); 
-            PreparedStatement ps = conn.prepareStatement(sqlSelectAllBahnhof_Ferienprojekt); 
+            PreparedStatement ps = conn.prepareStatement(sqlSelectAllBahnhoefe); 
             ResultSet rs = ps.executeQuery();
             // Solange es Datensätze in der von der DB angefragen Ressource gibt, werden diese durchgearbeitet und dann als eine ArrayList zurückgegeben
             while (rs.next()) {
@@ -57,7 +57,7 @@ public class DBController {
     // Füge neuen Bahnhof hinzu
     public void addNewBahnhof(String name, String standort, int anzahl_gleise) {
         try{
-            String sqlSelectAllPersons = "INSERT INTO banhoefe(name,standort,anzahl_gleise) VALUES('"+name+"','"+standort+"', '"+anzahl_gleise+"');";
+            String sqlSelectAllPersons = "INSERT INTO bahnhoefe(name,standort,anzahl_gleise) VALUES('"+name+"','"+standort+"', '"+anzahl_gleise+"');";
             Connection conn = DriverManager.getConnection(getConnectionUrl(), getUsername(), getPasswort());
             //Rückfrage!
             PreparedStatement ps = conn.prepareStatement(sqlSelectAllPersons); 
@@ -74,7 +74,7 @@ public class DBController {
     public void delBahnhof(int id){
         try{
 
-            String sqlSelectAllPersons = "DELETE FROM todos WHERE id="+String.valueOf(id);
+            String sqlSelectAllPersons = "DELETE FROM bahnhoefe WHERE id="+String.valueOf(id);
             Connection conn = DriverManager.getConnection(getConnectionUrl(), getUsername(), getPasswort());
             PreparedStatement ps = conn.prepareStatement(sqlSelectAllPersons); 
             // als Return von executeUpdate kommt 0 (FAIL) oder 1 (OK!) zurück
@@ -90,7 +90,7 @@ public class DBController {
     public Bahnhof getBahnhof(int id){
         Bahnhof bahnhof = null;
         try{
-            String sqlSelectAllPersons = "SELECT * FROM todos WHERE id="+String.valueOf(id);
+            String sqlSelectAllPersons = "SELECT * FROM bahnhoefe WHERE id="+String.valueOf(id);
             Connection conn = DriverManager.getConnection(getConnectionUrl(), getUsername(), getPasswort()); 
             PreparedStatement ps = conn.prepareStatement(sqlSelectAllPersons); 
             ResultSet rs = ps.executeQuery();
@@ -114,7 +114,7 @@ public class DBController {
     public Bahnhof updateBahnhof(int id, String name, String standort, int anzahl_gleise){
         Bahnhof bahnhof = null;
         try{
-            String sqlSelectAllPersons = "UPDATE todos SET person='"+name+"', standort='"+standort+"', anzahl_gleise='"+anzahl_gleise+"' WHERE id="+String.valueOf(id);
+            String sqlSelectAllPersons = "UPDATE bahnhoefe SET name='"+name+"', standort='"+standort+"', anzahl_gleise='"+anzahl_gleise+"' WHERE id="+String.valueOf(id);
             Connection conn = DriverManager.getConnection(getConnectionUrl(), getUsername(), getPasswort()); 
             PreparedStatement ps = conn.prepareStatement(sqlSelectAllPersons); 
             ps.executeUpdate();
