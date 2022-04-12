@@ -6,8 +6,8 @@ public class Passagier extends Person{
     int kundennummer;
 
     //CONSTRUCTOR
-    public Passagier(String vorname, String nachname, int kundennummer){
-        super(vorname, nachname);
+    public Passagier(int id, String vorname, String nachname, int kundennummer){
+        super(id, vorname, nachname);
         setKundennummer(kundennummer);
     }
 

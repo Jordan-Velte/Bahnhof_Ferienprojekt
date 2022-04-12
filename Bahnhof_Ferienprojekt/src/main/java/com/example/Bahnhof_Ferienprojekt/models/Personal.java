@@ -8,8 +8,8 @@ public class Personal extends Person{
     int personalnummer;
 
     //CONSTRUCTOR
-    public Personal(String vorname, String nachname, int personalnummer){
-        super(vorname, nachname);
+    public Personal(int id, String vorname, String nachname, int personalnummer){
+        super(id, vorname, nachname);
         setPersonalnummer(personalnummer);
     }
 

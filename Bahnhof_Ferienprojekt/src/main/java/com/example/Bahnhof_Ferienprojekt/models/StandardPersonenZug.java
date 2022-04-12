@@ -7,8 +7,8 @@ public class StandardPersonenZug extends Zug{
     int maxpersonenladung;
 
     //CONSTRUCTOR
-    public StandardPersonenZug(String modell, String betreiber, int durchschnittsgeschwindigkeit, int wagonanzahl, String zulassungsdatum, int maxpersonenladung){
-        super(modell, betreiber, durchschnittsgeschwindigkeit, wagonanzahl, zulassungsdatum);
+    public StandardPersonenZug(int id, String modell, String betreiber, int durchschnittsgeschwindigkeit, int wagonanzahl, String zulassungsdatum, int maxpersonenladung){
+        super(id, modell, betreiber, durchschnittsgeschwindigkeit, wagonanzahl, zulassungsdatum);
         setMaxpersonenladung(maxpersonenladung);
     }
 

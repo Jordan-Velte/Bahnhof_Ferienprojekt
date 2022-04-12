@@ -3,6 +3,9 @@ package com.example.Bahnhof_Ferienprojekt;
 import java.util.ArrayList;
 
 import com.example.Bahnhof_Ferienprojekt.models.Bahnhof;
+import com.example.Bahnhof_Ferienprojekt.models.Passagier;
+import com.example.Bahnhof_Ferienprojekt.models.Personal;
+import com.example.Bahnhof_Ferienprojekt.models.StandardPersonenZug;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -125,6 +128,320 @@ public class DBController {
 
         return bahnhof;
     }
+
+    //STANDARDPERSONENZUEGE, DB: standardpersonenzuege
+    // Holt alle Stanadardpersonenzüge aus der Datenbank und gibt diese als ArrayList zurück!
+    public ArrayList<StandardPersonenZug> getAllStandardPersonenZuege(){
+
+        // Lokale Standardpersonenzug-Arraylist erstellen
+        ArrayList<StandardPersonenZug> standardpersonenzuege = new ArrayList<>();
+
+        // Das ist DB-Query
+        String sqlSelectAllStandardpersonenzuege = "SELECT * FROM standardpersonenzuege";
+
+        // Verbindung aufbauen mit USERNAME root und PASSWORT root
+        try{
+            Connection conn = DriverManager.getConnection(getConnectionUrl(), getUsername(), getPasswort()); 
+            PreparedStatement ps = conn.prepareStatement(sqlSelectAllStandardpersonenzuege); 
+            ResultSet rs = ps.executeQuery();
+            // Solange es Datensätze in der von der DB angefragen Ressource gibt, werden diese durchgearbeitet und dann als eine ArrayList zurückgegeben
+            while (rs.next()) {
+                int id = (int) rs.getLong("id");
+                String modell = rs.getString("modell");
+                String betreiber = rs.getString("betreiber");
+                int durchschnittsgeschwindigkeit = (int) rs.getLong("durchschnittsgeschwindigkeit");
+                int wagonanzahl = (int) rs.getLong("wagonanzahl");
+                String zulassungsdatum = rs.getString("zulassungsdatum");
+                int maxpersonenladung = (int) rs.getLong("maxpersonenladung");
+
+                standardpersonenzuege.add(new StandardPersonenZug(id, modell, betreiber, durchschnittsgeschwindigkeit, wagonanzahl, zulassungsdatum, maxpersonenladung));
+            }
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }
+
+        return standardpersonenzuege;
+    }
+    // Füge neuen Standardpersonenzug hinzu
+    public void addNewStandardpersonenzug(String modell, String betreiber, int durchschnittsgeschwindigkeit, int wagonanzahl, String zulassungsdatum, int maxpersonenladung) {
+        try{
+            String sqlSelectAllPersons = "INSERT INTO standardpersonenzuege(modell,betreiber,durchschnittsgeschwindigkeit, wagonanzahl, zulassungsdatum, maxpersonenladung) VALUES('"+modell+"','"+betreiber+"', '"+durchschnittsgeschwindigkeit+"', '"+wagonanzahl+"', '"+zulassungsdatum+"', '"+maxpersonenladung+"');";
+            Connection conn = DriverManager.getConnection(getConnectionUrl(), getUsername(), getPasswort());
+            //Rückfrage!
+            PreparedStatement ps = conn.prepareStatement(sqlSelectAllPersons); 
+            // als Return von executeUpdate kommt 0 (FAIL) oder 1 (OK!) zurück
+            int rs = ps.executeUpdate();
+            System.out.println(rs);
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }
+    }
+
+    // Lösche einen Standardpersonenzug
+    public void delStandardpersonenzug(int id){
+        try{
+
+            String sqlSelectAllPersons = "DELETE FROM standardpersonenzuege WHERE id="+String.valueOf(id);
+            Connection conn = DriverManager.getConnection(getConnectionUrl(), getUsername(), getPasswort());
+            PreparedStatement ps = conn.prepareStatement(sqlSelectAllPersons); 
+            // als Return von executeUpdate kommt 0 (FAIL) oder 1 (OK!) zurück
+            int rs = ps.executeUpdate();
+            System.out.println(rs);
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }
+    }
+
+    // Hole spezifischen Standardpersonenzug
+    public StandardPersonenZug getStandardpersonenzug(int id){
+        StandardPersonenZug standardpersonenzug = null;
+        try{
+            String sqlSelectAllPersons = "SELECT * FROM standardpersonenzuege WHERE id="+String.valueOf(id);
+            Connection conn = DriverManager.getConnection(getConnectionUrl(), getUsername(), getPasswort()); 
+            PreparedStatement ps = conn.prepareStatement(sqlSelectAllPersons); 
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                int standardpersonenzugId = (int) rs.getLong("id");
+                String modell = rs.getString("modell");
+                String betreiber = rs.getString("betreiber");
+                int durchschnittsgeschwindigkeit = (int) rs.getLong("durchschnittsgeschwindigkeit");
+                int wagonanzahl = (int) rs.getLong("wagonanzahl");
+                String zulassungsdatum = rs.getString("zulassungsdatum");
+                int maxpersonenladung = (int) rs.getLong("maxpersonenladung");
+                standardpersonenzug = new StandardPersonenZug(standardpersonenzugId, modell, betreiber, durchschnittsgeschwindigkeit, wagonanzahl, zulassungsdatum, maxpersonenladung);
+            }
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }
+
+        return standardpersonenzug;
+    }
+
+    // Hole spezifischen Standardpersonenzug und aktualisiere diesen ab
+    public StandardPersonenZug updateStandardpersonenzug(int id, String modell, String betreiber, int durchschnittsgeschwindigkeit, int wagonanzahl, String zulassungsdatum, int maxpersonenladung){
+        StandardPersonenZug standardpersonenzug = null;
+        try{
+            String sqlSelectAllPersons = "UPDATE standardpersonenzuege SET modell='"+modell+"', betreiber='"+betreiber+"', durchschnittsgeschwindigkeit='"+durchschnittsgeschwindigkeit+"', wagonanzahl='"+wagonanzahl+"', zulassungsdatum='"+zulassungsdatum+"', maxpersonenladung='"+maxpersonenladung+"' WHERE id="+String.valueOf(id);
+            Connection conn = DriverManager.getConnection(getConnectionUrl(), getUsername(), getPasswort()); 
+            PreparedStatement ps = conn.prepareStatement(sqlSelectAllPersons); 
+            ps.executeUpdate();
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }
+
+        return standardpersonenzug;
+    }
+
+    //PASSAGIERE, DB: passagiere
+    // Holt alle Passagiere aus der Datenbank und gibt diese als ArrayList zurück!
+    public ArrayList<Passagier> getAllPassagiere(){
+
+        // Lokale Passagier-Arraylist erstellen
+        ArrayList<Passagier> passagiere = new ArrayList<>();
+
+        // Das ist DB-Query
+        String sqlSelectAllPassagiere = "SELECT * FROM passagiere";
+
+        // Verbindung aufbauen mit USERNAME root und PASSWORT root
+        try{
+            Connection conn = DriverManager.getConnection(getConnectionUrl(), getUsername(), getPasswort()); 
+            PreparedStatement ps = conn.prepareStatement(sqlSelectAllPassagiere); 
+            ResultSet rs = ps.executeQuery();
+            // Solange es Datensätze in der von der DB angefragen Ressource gibt, werden diese durchgearbeitet und dann als eine ArrayList zurückgegeben
+            while (rs.next()) {
+                int id = (int) rs.getLong("id");
+                String vorname = rs.getString("vorname");
+                String nachname = rs.getString("nachname");
+                int kundennummer = (int) rs.getLong("kundennummer");
+                passagiere.add(new Passagier(id, vorname, nachname, kundennummer));
+            }
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }
+
+        return passagiere;
+    }
+    // Füge neuen Passagier hinzu
+    public void addNewPassagier(String vorname, String nachname, int kundennummer) {
+        try{
+            String sqlSelectAllPersons = "INSERT INTO passagiere(vorname,nachname,kundennummer) VALUES('"+vorname+"','"+nachname+"', '"+kundennummer+"');";
+            Connection conn = DriverManager.getConnection(getConnectionUrl(), getUsername(), getPasswort());
+            //Rückfrage!
+            PreparedStatement ps = conn.prepareStatement(sqlSelectAllPersons); 
+            // als Return von executeUpdate kommt 0 (FAIL) oder 1 (OK!) zurück
+            int rs = ps.executeUpdate();
+            System.out.println(rs);
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }
+    }
+
+    // Lösche einen Passagier
+    public void delPassagier(int id){
+        try{
+
+            String sqlSelectAllPersons = "DELETE FROM passagiere WHERE id="+String.valueOf(id);
+            Connection conn = DriverManager.getConnection(getConnectionUrl(), getUsername(), getPasswort());
+            PreparedStatement ps = conn.prepareStatement(sqlSelectAllPersons); 
+            // als Return von executeUpdate kommt 0 (FAIL) oder 1 (OK!) zurück
+            int rs = ps.executeUpdate();
+            System.out.println(rs);
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }
+    }
+
+    // Hole spezifischen Passagier
+    public Passagier getPassagier(int id){
+        Passagier passagier = null;
+        try{
+            String sqlSelectAllPersons = "SELECT * FROM passagiere WHERE id="+String.valueOf(id);
+            Connection conn = DriverManager.getConnection(getConnectionUrl(), getUsername(), getPasswort()); 
+            PreparedStatement ps = conn.prepareStatement(sqlSelectAllPersons); 
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                int PassagierId = (int) rs.getLong("id");
+                String vorname = rs.getString("vorname");
+                String nachname = rs.getString("nachname");
+                int kundennummer = (int) rs.getLong("kundennummer");
+                passagier = new Passagier(PassagierId, vorname, nachname, kundennummer);
+            }
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }
+
+        return passagier;
+    }
+
+    // Hole spezifischen Passagier und aktualisiere diesen ab
+    public Passagier updatePassagier(int id, String vorname, String nachname, int kundennummer){
+        Passagier passagier = null;
+        try{
+            String sqlSelectAllPersons = "UPDATE passagiere SET vorname='"+vorname+"', nachname='"+nachname+"', kundennummer='"+kundennummer+"' WHERE id="+String.valueOf(id);
+            Connection conn = DriverManager.getConnection(getConnectionUrl(), getUsername(), getPasswort()); 
+            PreparedStatement ps = conn.prepareStatement(sqlSelectAllPersons); 
+            ps.executeUpdate();
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }
+
+        return passagier;
+    }
+
+    //PERSONAL, DB: personale
+    // Holt alle Personal aus der Datenbank und gibt diese als ArrayList zurück!
+    public ArrayList<Personal> getAllPersonale(){
+
+        // Lokale Personal-Arraylist erstellen
+        ArrayList<Personal> personale = new ArrayList<>();
+
+        // Das ist DB-Query
+        String sqlSelectAllPersonale = "SELECT * FROM personale";
+
+        // Verbindung aufbauen mit USERNAME root und PASSWORT root
+        try{
+            Connection conn = DriverManager.getConnection(getConnectionUrl(), getUsername(), getPasswort()); 
+            PreparedStatement ps = conn.prepareStatement(sqlSelectAllPersonale); 
+            ResultSet rs = ps.executeQuery();
+            // Solange es Datensätze in der von der DB angefragen Ressource gibt, werden diese durchgearbeitet und dann als eine ArrayList zurückgegeben
+            while (rs.next()) {
+                int id = (int) rs.getLong("id");
+                String vorname = rs.getString("vorname");
+                String nachname = rs.getString("nachname");
+                int personalnummer = (int) rs.getLong("personalnummer");
+                personale.add(new Personal(id, vorname, nachname, personalnummer));
+            }
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }
+
+        return personale;
+    }
+    // Füge neuen Personal hinzu
+    public void addNewPersonal(String vorname, String nachname, int personalnummer) {
+        try{
+            String sqlSelectAllPersons = "INSERT INTO personale(vorname,nacnname,personalnummer) VALUES('"+vorname+"','"+nachname+"', '"+personalnummer+"');";
+            Connection conn = DriverManager.getConnection(getConnectionUrl(), getUsername(), getPasswort());
+            //Rückfrage!
+            PreparedStatement ps = conn.prepareStatement(sqlSelectAllPersons); 
+            // als Return von executeUpdate kommt 0 (FAIL) oder 1 (OK!) zurück
+            int rs = ps.executeUpdate();
+            System.out.println(rs);
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }
+    }
+
+    // Lösche einen Personal
+    public void delPersonal(int id){
+        try{
+
+            String sqlSelectAllPersons = "DELETE FROM personale WHERE id="+String.valueOf(id);
+            Connection conn = DriverManager.getConnection(getConnectionUrl(), getUsername(), getPasswort());
+            PreparedStatement ps = conn.prepareStatement(sqlSelectAllPersons); 
+            // als Return von executeUpdate kommt 0 (FAIL) oder 1 (OK!) zurück
+            int rs = ps.executeUpdate();
+            System.out.println(rs);
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }
+    }
+
+    // Hole spezifischen Personal
+    public Personal getPersonal(int id){
+        Personal personal = null;
+        try{
+            String sqlSelectAllPersons = "SELECT * FROM personale WHERE id="+String.valueOf(id);
+            Connection conn = DriverManager.getConnection(getConnectionUrl(), getUsername(), getPasswort()); 
+            PreparedStatement ps = conn.prepareStatement(sqlSelectAllPersons); 
+            ResultSet rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                int PersonalId = (int) rs.getLong("id");
+                String vorname = rs.getString("vorname");
+                String nachname = rs.getString("nachname");
+                int personalnummer = (int) rs.getLong("personalnummer");
+                personal = new Personal(PersonalId, vorname, nachname, personalnummer);
+            }
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }
+
+        return personal;
+    }
+
+    // Hole spezifischen Personal und aktualisiere diesen ab
+    public Personal updatePersonal(int id, String vorname, String nachname, int personalnummer){
+        Personal personal = null;
+        try{
+            String sqlSelectAllPersons = "UPDATE passagiere SET vorname='"+vorname+"', nachname='"+nachname+"', personalnummer='"+personalnummer+"' WHERE id="+String.valueOf(id);
+            Connection conn = DriverManager.getConnection(getConnectionUrl(), getUsername(), getPasswort()); 
+            PreparedStatement ps = conn.prepareStatement(sqlSelectAllPersons); 
+            ps.executeUpdate();
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }
+
+        return personal;
+    }
+
 
 
     //Setter und Getter

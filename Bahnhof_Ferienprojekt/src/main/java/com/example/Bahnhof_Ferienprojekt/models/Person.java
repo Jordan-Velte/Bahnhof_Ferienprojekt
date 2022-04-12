@@ -5,11 +5,13 @@ package com.example.Bahnhof_Ferienprojekt.models;
 //Abstrakte Klasse --> kein Element kann von der Oberklasse erstellt werden (macht im Sachkontext keinen Sinn)!
 public abstract class Person {
     //VARIABLENDEKLARATION
+    int id; 
     String vorname;
     String nachname;
 
     //CONSTRUCTOR
-    public Person(String vorname, String nachname){
+    public Person(int id, String vorname, String nachname){
+        setId(id);
         setVorname(vorname);
         setNachname(nachname);
     }
@@ -27,6 +29,13 @@ public abstract class Person {
     public void setVorname(String vorname) {
         this.vorname = vorname;
     }
+    public void setId(int id) {
+        this.id = id;
+    }
+    public int getId() {
+        return id;
+    }
+
 
 
 

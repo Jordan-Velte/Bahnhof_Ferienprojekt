@@ -25,11 +25,13 @@ public class BahnhoefeController {
 
     //Demodaten
     
+    /*
     private void createDemoData(){
         getBahnhoefe().add(new Bahnhof(0, "Hamburg Hauptbahnhof", "Hamburg", 5));
         getBahnhoefe().add(new Bahnhof(1, "Berlin Hauptbahnhof", "Berlin", 4));
         getBahnhoefe().add(new Bahnhof(2, "Hannover Regionalbahnhof", "Hannover", 2));
     }
+    */
     
 
     // Lädt aktuelle Bahnhöfe aus der Datenbank und wirft bei Bedarf eine SQL-Exception

@@ -8,6 +8,7 @@ package com.example.Bahnhof_Ferienprojekt.models;
 //Abstrakte Klasse --> kein Element kann von der Oberklasse erstellt werden (macht im Sachkontext keinen Sinn)!
 public abstract class Zug {
     //VARIABLENDEKLARATION
+    int id;
     String modell;
     String betreiber;
     int durchschnittsgeschwindigkeit;
@@ -15,7 +16,8 @@ public abstract class Zug {
     String zulassungsdatum;
 
     //CONSTRUCTOR
-    public Zug(String modell, String betreiber, int durchschnittsgeschwindigkeit, int wagonanzahl, String zulassungsdatum){
+    public Zug(int id, String modell, String betreiber, int durchschnittsgeschwindigkeit, int wagonanzahl, String zulassungsdatum){
+        setId(id);
         setBetreiber(betreiber);
         setModell(modell);
         setDurchschnittsgeschwindigkeit(durchschnittsgeschwindigkeit);
@@ -54,5 +56,12 @@ public abstract class Zug {
     public String getZulassungsdatum() {
         return zulassungsdatum;
     }
+    public void setId(int id) {
+        this.id = id;
+    }
+    public int getId() {
+        return id;
+    }
+
 }
 

@@ -26,11 +26,27 @@ public class PersonController {
         setPersonen(new ArrayList<Person>());
         setPassagiere(new ArrayList<Passagier>());
         setPersonal(new ArrayList<Personal>());
-        createDemoData();
+        //createDemoData();
+        loadPassagiereFromDB();
+        loadPersonaleFromDB();
         
     }
+    
+    // Lädt aktuelle Passagiere aus der Datenbank und wirft bei Bedarf eine SQL-Exception
+    private void loadPassagiereFromDB(){
+        DBController db = new DBController();
+        setPassagiere(db.getAllPassagiere());
+    }
+
+    // Lädt aktuelles Personal aus der Datenbank und wirft bei Bedarf eine SQL-Exception
+    private void loadPersonaleFromDB(){
+        DBController db = new DBController();
+        setPersonal(db.getAllPersonale());
+    }
+
 
     //Demodaten
+    /*
     private void createDemoData(){
         Passagier pr1 = new Passagier("Napoleon", "Fischer", 9);
         Passagier pr2 = new Passagier("Major", "Kunze", 7);
@@ -52,10 +68,12 @@ public class PersonController {
         getPersonen().add(pl3);
         
     }
+    */
 
     //PASSAGIERE
     @GetMapping("/passagiere")
     public String passagiere(@RequestParam(name="activePage", required = false, defaultValue = "passagiere") String activePage, Model model){
+        loadPassagiereFromDB();
         model.addAttribute("activePage", "passagiere");
         model.addAttribute("passagiere", getPassagiere());
         return "index.html";
@@ -63,13 +81,15 @@ public class PersonController {
 
     @RequestMapping("/delpassagier")
     public String delpassagier (@RequestParam(name="id", required = true, defaultValue = "null") int id, @RequestParam(name="activePage", required = false, defaultValue = "passagiere") String activePage, Model model){
-        getPassagiere().remove(id);
+        DBController db = new DBController();
+        db.delPassagier(id);
         return "redirect:/passagiere";
     }
 
     @RequestMapping("/changepassagier")
     public String changepassagier(@RequestParam(name="id", required = true, defaultValue = "null") int id, @RequestParam(name="activePage", required = false, defaultValue = "changepassagier") String activePage, Model model){
-        model.addAttribute("passagier", getPassagiere().get(id));
+        DBController db = new DBController();
+        model.addAttribute("passagier", db.getPassagier(id));
         model.addAttribute("passagierid", id);
         model.addAttribute("activePage", "passagierUpdate");
         return "index.html";
@@ -77,17 +97,15 @@ public class PersonController {
 
     @RequestMapping("/updatepassagier")
     public String updatepassagier (@RequestParam(name="passagierId", required = true, defaultValue = "null") int passagierId, @RequestParam(name="passagierVorname", required = true, defaultValue = "null") String passagierVorname,@RequestParam(name="passagierNachname", required = true, defaultValue = "null") String passagierNachname, @RequestParam(name="passagierKundennummer", required = true, defaultValue = "null") int passagierKundennummer,  @RequestParam(name="activePage", required = false, defaultValue = "passagiere") String activePage, Model model){
-        getPassagiere().get(passagierId).setVorname(passagierVorname);
-        getPassagiere().get(passagierId).setNachname(passagierNachname);
-        getPassagiere().get(passagierId).setKundennummer(passagierKundennummer);
+        DBController db = new DBController();
+        db.updatePassagier(passagierId, passagierVorname, passagierNachname, passagierKundennummer);
         return "redirect:/passagiere";
     }
 
     @RequestMapping("/addpassagier")
     public String addpassagier(@RequestParam(name="passagierVorname", required = true, defaultValue = "null") String passagierVorname,@RequestParam(name="passagierNachname", required = true, defaultValue = "null") String passagierNachname, @RequestParam(name="passagierKundennummer", required = true, defaultValue = "null") int passagierKundennummer,  @RequestParam(name="activePage", required = false, defaultValue = "passagiere") String activePage, Model model){
-        Passagier pr = new Passagier(passagierVorname, passagierNachname, passagierKundennummer);
-        getPassagiere().add(pr);
-        getPersonen().add(pr);
+        DBController db = new DBController();
+        db.addNewPassagier(passagierVorname, passagierNachname, passagierKundennummer);
         return "redirect:/passagiere";
        
     }
@@ -95,6 +113,7 @@ public class PersonController {
     //PERSONAL
     @GetMapping("/personal")
     public String personal(@RequestParam(name="activePage", required = false, defaultValue = "personal") String activePage, Model model){
+        loadPersonaleFromDB();
         model.addAttribute("activePage", "personal");
         model.addAttribute("personal", getPersonal());
         return "index.html";
@@ -102,13 +121,15 @@ public class PersonController {
 
     @RequestMapping("/delpersonal")
     public String delpersonal (@RequestParam(name="id", required = true, defaultValue = "null") int id, @RequestParam(name="activePage", required = false, defaultValue = "personal") String activePage, Model model){
-        getPersonal().remove(id);
+        DBController db = new DBController();
+        db.delPersonal(id);
         return "redirect:/personal";
     }
 
     @RequestMapping("/changepersonal")
     public String changepersonal(@RequestParam(name="id", required = true, defaultValue = "null") int id, @RequestParam(name="activePage", required = false, defaultValue = "changepersonal") String activePage, Model model){
-        model.addAttribute("personal", getPersonal().get(id));
+        DBController db = new DBController();
+        model.addAttribute("personal", db.getPersonal(id));
         model.addAttribute("personalid", id);
         model.addAttribute("activePage", "personalUpdate");
         return "index.html";
@@ -117,17 +138,15 @@ public class PersonController {
     @RequestMapping("/updatepersonal")
     public String updatepersonal (@RequestParam(name="personalId", required = true, defaultValue = "null") int personalId, @RequestParam(name="personalVorname", required = true, defaultValue = "null") String personalVorname,
     @RequestParam(name="personalNachname", required = true, defaultValue = "null") String personalNachname, @RequestParam(name="personalPersonalnummer", required = true, defaultValue = "null") int personalPersonalnummer,  @RequestParam(name="activePage", required = false, defaultValue = "personal") String activePage, Model model){
-        getPersonal().get(personalId).setVorname(personalVorname);
-        getPersonal().get(personalId).setNachname(personalNachname);
-        getPersonal().get(personalId).setPersonalnummer(personalPersonalnummer);
+        DBController db = new DBController();
+        db.updatePersonal(personalId, personalVorname, personalNachname, personalPersonalnummer);
         return "redirect:/personal";
     }
 
     @RequestMapping("/addpersonal")
     public String addpersonal(@RequestParam(name="personalVorname", required = true, defaultValue = "null") String personalVorname,@RequestParam(name="personalNachname", required = true, defaultValue = "null") String personalNachname, @RequestParam(name="personalPersonalnummer", required = true, defaultValue = "null") int personalPersonalnummer,  @RequestParam(name="activePage", required = false, defaultValue = "personal") String activePage, Model model){
-        Personal pl = new Personal(personalVorname, personalNachname, personalPersonalnummer);
-        getPersonal().add(pl);
-        getPersonen().add(pl);
+        DBController db = new DBController();
+        db.addNewPersonal(personalVorname, personalNachname, personalPersonalnummer);
         return "redirect:/personal";
        
     }
