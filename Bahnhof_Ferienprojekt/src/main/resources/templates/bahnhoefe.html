@@ -9,6 +9,7 @@
             <td>Name</td>
             <td>Standort</td>
             <td>Anzahl Gleise</td>
+            <td>Passagier</td>
             <td>&nbsp;</td>
         </tr>
     </thead>
@@ -19,6 +20,7 @@
             <td th:text="${bahnhof.getName()}"></td>
             <td th:text="${bahnhof.getStandort()}"></td>
             <td th:text="${bahnhof.getAnzahl_Gleise()}"></td>
+            <td th:text="${bahnhof.getPassagier()}"></td>
             <td>
                 <!-- Button delete! -->
                 <a class="btn btn-sm btn-danger" th:href="@{/delbahnhof(id=${bahnhofStat.index})}">
@@ -77,6 +79,12 @@
         <select class="custom-select" id="inputGroupSelect01" th:name="bahnhofAnzahl_Gleise">
             <!-- Dynamisierte DropDown-Liste mit Option-Select -->
             <option th:each="anzahl_gleis: ${anzahl_gleise}" th:value="${anzahl_gleis}" th:text="${anzahl_gleis}"></option>
+        </select>
+
+        <!-- Anzahl Gleise -->
+        <select class="custom-select" id="inputGroupSelect01" th:name="bahnhofPassagier">
+            <!-- Dynamisierte DropDown-Liste mit Option-Select -->
+            <option th:each="passagier: ${passagiere}" th:value="${passagier}" th:text="${passagier}"></option>
         </select>
 
         <div class="input-group-append">

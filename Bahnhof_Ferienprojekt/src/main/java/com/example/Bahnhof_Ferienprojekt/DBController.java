@@ -34,7 +34,7 @@ public class DBController {
         ArrayList<Bahnhof> bahnhoefe = new ArrayList<>();
 
         // Das ist DB-Query
-        String sqlSelectAllBahnhoefe = "SELECT * FROM bahnhoefe";
+        String sqlSelectAllBahnhoefe = "SELECT * FROM `bahnhoefe` JOIN passagier on passagier.id=bahnhoefe.id_passagier";
 
         // Verbindung aufbauen mit USERNAME root und PASSWORT root
         try{
@@ -47,7 +47,9 @@ public class DBController {
                 String name = rs.getString("name");
                 String standort = rs.getString("standort");
                 int anzahl_gleise = (int) rs.getLong("anzahl_gleise");
-                bahnhoefe.add(new Bahnhof(id, name, standort, anzahl_gleise));
+                String passagier = rs.getString("passagiername");
+                int passagierId = (int) rs.getLong("id_passagier");
+                bahnhoefe.add(new Bahnhof(id, name, standort, anzahl_gleise, passagier, passagierId));
             }
         }
         catch(SQLException e){
@@ -58,9 +60,9 @@ public class DBController {
     }
 
     // Füge neuen Bahnhof hinzu
-    public void addNewBahnhof(String name, String standort, int anzahl_gleise) {
+    public void addNewBahnhof(String name, String standort, int anzahl_gleise, int passagier) {
         try{
-            String sqlSelectAllPersons = "INSERT INTO bahnhoefe(name,standort,anzahl_gleise) VALUES('"+name+"','"+standort+"', '"+anzahl_gleise+"');";
+            String sqlSelectAllPersons = "INSERT INTO bahnhoefe(name,standort,anzahl_gleise,id_passagier) VALUES('"+name+"','"+standort+"', '"+anzahl_gleise+"', '"+passagier+"');";
             Connection conn = DriverManager.getConnection(getConnectionUrl(), getUsername(), getPasswort());
             //Rückfrage!
             PreparedStatement ps = conn.prepareStatement(sqlSelectAllPersons); 
@@ -93,7 +95,7 @@ public class DBController {
     public Bahnhof getBahnhof(int id){
         Bahnhof bahnhof = null;
         try{
-            String sqlSelectAllPersons = "SELECT * FROM bahnhoefe WHERE id="+String.valueOf(id);
+            String sqlSelectAllPersons = "SELECT * FROM `bahnhoefe` JOIN passagier ON passagier.id=bahnhoefe.id_passagier WHERE bahnhoefe.id="+String.valueOf(id);
             Connection conn = DriverManager.getConnection(getConnectionUrl(), getUsername(), getPasswort()); 
             PreparedStatement ps = conn.prepareStatement(sqlSelectAllPersons); 
             ResultSet rs = ps.executeQuery();
@@ -103,7 +105,9 @@ public class DBController {
                 String name = rs.getString("name");
                 String standort = rs.getString("standort");
                 int anzahl_gleise = (int) rs.getLong("anzahl_gleise");
-                bahnhof = new Bahnhof(bahnhofId, name, standort, anzahl_gleise);
+                String passagier = rs.getString("passagiername");
+                int passagierId = (int) rs.getLong("id_passagier");
+                bahnhof = new Bahnhof(bahnhofId, name, standort, anzahl_gleise, passagier, passagierId);
             }
         }
         catch(SQLException e){
@@ -114,10 +118,10 @@ public class DBController {
     }
 
     // Hole spezifischen Bahnhof und aktualisiere diese ab
-    public Bahnhof updateBahnhof(int id, String name, String standort, int anzahl_gleise){
+    public Bahnhof updateBahnhof(int id, String name, String standort, int anzahl_gleise, int passagierId){
         Bahnhof bahnhof = null;
         try{
-            String sqlSelectAllPersons = "UPDATE bahnhoefe SET name='"+name+"', standort='"+standort+"', anzahl_gleise='"+anzahl_gleise+"' WHERE id="+String.valueOf(id);
+            String sqlSelectAllPersons = "UPDATE bahnhoefe SET name='"+name+"', standort='"+standort+"', anzahl_gleise='"+anzahl_gleise+"', id_passagier='"+passagierId+"' WHERE id="+String.valueOf(id);
             Connection conn = DriverManager.getConnection(getConnectionUrl(), getUsername(), getPasswort()); 
             PreparedStatement ps = conn.prepareStatement(sqlSelectAllPersons); 
             ps.executeUpdate();

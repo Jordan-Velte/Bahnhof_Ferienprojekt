@@ -24,6 +24,14 @@
                 <option th:unless="${bahnhof.getAnzahl_Gleise() == anzahl_gleis}" th:value="${anzahl_gleis}" th:text="${anzahl_gleis}"></option>
             </span>
         </select>
+        <!-- Passagiere -->
+        <select class="custom-select" id="inputGroupSelect01" th:name="bahnhofPassagierId">
+            <!-- Dynamisierte DropDown-Liste mit Option-Select -->
+            <span th:each="passagier: ${passagiere}">
+                <option th:if="${bahnhof.getPassagierId() == passagier.getId()}" th:value="${passagier.getId()}" th:text="${passagier.getVorname()}" selected="selected"></option>
+                <option th:unless="${bahnhof.getPassagierId() == passagier.getId()}" th:value="${passagier.getId()}" th:text="${passagier.getVorname()}"></option>
+            </span>
+        </select>
         <input type="number" class="form-control" th:value="${bahnhofid}" th:name="bahnhofId" style="display: none;" >
         <div class="input-group-append">
             <!--Submit button verbindet sich automatisch mit Formular und aktiviert action, für Anknüpfung Parameter hinzuzufügen-->

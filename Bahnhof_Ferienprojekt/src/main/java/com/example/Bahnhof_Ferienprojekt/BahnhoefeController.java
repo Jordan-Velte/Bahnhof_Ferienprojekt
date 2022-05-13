@@ -4,6 +4,7 @@ package com.example.Bahnhof_Ferienprojekt;
 import java.util.ArrayList;
 
 import com.example.Bahnhof_Ferienprojekt.models.Bahnhof;
+import com.example.Bahnhof_Ferienprojekt.models.Passagier;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -79,6 +80,14 @@ public class BahnhoefeController {
         return anzahl_gleise;
     }
 
+    //Holt alle Passagiere aus der DB
+    private ArrayList<Passagier> getPassagiere(){
+        ArrayList<Passagier> passagiere = new ArrayList<>();
+        DBController db = new DBController();
+        passagiere = db.getAllPassagiere();
+        return passagiere;
+    }
+
 
 
     @GetMapping("/bahnhoefe")
@@ -91,6 +100,8 @@ public class BahnhoefeController {
         model.addAttribute("standorte", getStandorte());
         // Anzahl Gleise für einen Bahnhof holen
         model.addAttribute("anzahl_gleise", getAnzahl_Gleise());
+        //Passagier für einen Bahnhof holen
+        model.addAttribute("passagiere", getPassagiere());
         return "index.html";
     }
 
@@ -113,21 +124,24 @@ public class BahnhoefeController {
         //Mögliche Anzahl Gleise hier hinzufügen
         model.addAttribute("anzahl_gleise", getAnzahl_Gleise());
 
+        //Mögliche Passagiere hier hinzufügen:
+        model.addAttribute("passagiere", getPassagiere());
+
         model.addAttribute("activePage", "bahnhofUpdate");
         return "index.html";
     }
 
     @RequestMapping("/updatebahnhof")
-    public String updatebahnhof(@RequestParam(name="bahnhofId", required = true, defaultValue = "null") int bahnhofId, @RequestParam(name="bahnhofName", required = true, defaultValue = "null") String bahnhofName, @RequestParam(name="bahnhofStandort", required = true, defaultValue = "null") String bahnhofStandort, @RequestParam(name="bahnhofAnzahl_Gleise", required = true, defaultValue = "null") int bahnhofAnzahl_Gleise, @RequestParam(name="activePage", required = false, defaultValue = "bahnhoefe") String activePage, Model model){
+    public String updatebahnhof(@RequestParam(name="bahnhofId", required = true, defaultValue = "null") int bahnhofId, @RequestParam(name="bahnhofName", required = true, defaultValue = "null") String bahnhofName, @RequestParam(name="bahnhofStandort", required = true, defaultValue = "null") String bahnhofStandort, @RequestParam(name="bahnhofAnzahl_Gleise", required = true, defaultValue = "null") int bahnhofAnzahl_Gleise, @RequestParam(name="bahnhofPassagierId", required = true, defaultValue = "null") int bahnhofPassagierId, @RequestParam(name="activePage", required = false, defaultValue = "bahnhoefe") String activePage, Model model){
         DBController db = new DBController();
-        db.updateBahnhof(bahnhofId, bahnhofName, bahnhofStandort, bahnhofAnzahl_Gleise);
+        db.updateBahnhof(bahnhofId, bahnhofName, bahnhofStandort, bahnhofAnzahl_Gleise, bahnhofPassagierId);
         return "redirect:/bahnhoefe";
     }
 
     @RequestMapping("/addbahnhof")
-    public String addbahnhof(@RequestParam(name="bahnhofName", required = true, defaultValue = "null") String bahnhofName,@RequestParam(name="bahnhofStandort", required = true, defaultValue = "null") String bahnhofStandort, @RequestParam(name="bahnhofAnzahl_Gleise", required = true, defaultValue = "null") int bahnhofAnzahl_Gleise, @RequestParam(name="activePage", required = false, defaultValue = "bahnhoefe") String activePage, Model model){
+    public String addbahnhof(@RequestParam(name="bahnhofName", required = true, defaultValue = "null") String bahnhofName,@RequestParam(name="bahnhofStandort", required = true, defaultValue = "null") String bahnhofStandort, @RequestParam(name="bahnhofAnzahl_Gleise", required = true, defaultValue = "null") int bahnhofAnzahl_Gleise, @RequestParam(name="bahnhofPassagierId", required = true, defaultValue = "null") int bahnhofPassagierId, @RequestParam(name="activePage", required = false, defaultValue = "bahnhoefe") String activePage, Model model){
         DBController db = new DBController();
-        db.addNewBahnhof(bahnhofName, bahnhofStandort, bahnhofAnzahl_Gleise);
+        db.addNewBahnhof(bahnhofName, bahnhofStandort, bahnhofAnzahl_Gleise, bahnhofPassagierId);
         return "redirect:/bahnhoefe";
     }
 
